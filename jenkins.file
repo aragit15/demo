@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools{
+        maven 'mymaven'
+    }
+
+    stages {
+        stage('Compile') {
+            agent any
+            steps {
+                script{   
+                sh 'mvn compile'
+                }
+            } 
+        }
+        stage("Test"){
+            agent any
+            steps{
+                script{
+                echo "Run the test cases"
+                sh 'mvn test'
+            }
+            post{
+                always{
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+            }
+        }
+}
+}
+
+
+                     
+            
+        
+       
+    
